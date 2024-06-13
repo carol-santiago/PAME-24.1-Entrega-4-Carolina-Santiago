@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAssocEncomendaIngredienteDto } from './dto/create-assoc-encomenda-ingrediente.dto';
 import { UpdateAssocEncomendaIngredienteDto } from './dto/update-assoc-encomenda-ingrediente.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AssocEncomendaIngredienteService {
-  create(createAssocEncomendaIngredienteDto: CreateAssocEncomendaIngredienteDto) {
-    return 'This action adds a new assocEncomendaIngrediente';
+  constructor(private readonly prismaService: PrismaService) {}
+  create(data: CreateAssocEncomendaIngredienteDto) {
+    const assocEncomendaIngredienteCriado =
+      this.prismaService.assocEncomendaIngrediente.create({ data });
+    return assocEncomendaIngredienteCriado;
   }
 
   findAll() {
-    return `This action returns all assocEncomendaIngrediente`;
+    const todasAssocEncomendaIngrediente =
+      this.prismaService.assocEncomendaIngrediente.findMany();
+    return todasAssocEncomendaIngrediente;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} assocEncomendaIngrediente`;
+    const assocEncomendaIngrediente =
+      this.prismaService.assocEncomendaIngrediente.findUnique({
+        where: { id },
+      });
+    return assocEncomendaIngrediente;
   }
 
-  update(id: number, updateAssocEncomendaIngredienteDto: UpdateAssocEncomendaIngredienteDto) {
-    return `This action updates a #${id} assocEncomendaIngrediente`;
+  update(
+    id: number,
+    updateAssocEncomendaIngredienteDto: UpdateAssocEncomendaIngredienteDto,
+  ) {
+    const assocEncomendaIngredienteAtualizado =
+      this.prismaService.assocEncomendaIngrediente.update({
+        where: { id },
+        data: updateAssocEncomendaIngredienteDto,
+      });
+    return assocEncomendaIngredienteAtualizado;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} assocEncomendaIngrediente`;
+    this.prismaService.assocEncomendaIngrediente.delete({ where: { id } });
+    return `This action removes assocEncomendaIngrediente #${id}`;
   }
 }

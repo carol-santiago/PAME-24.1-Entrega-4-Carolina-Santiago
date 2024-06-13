@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLasanhaDto } from './dto/create-lasanha.dto';
 import { UpdateLasanhaDto } from './dto/update-lasanha.dto';
-
+import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class LasanhaService {
-  create(createLasanhaDto: CreateLasanhaDto) {
-    return 'This action adds a new lasanha';
+  constructor(private readonly prismaService: PrismaService) {}
+  create(data: CreateLasanhaDto) {
+    const lasanhaCriado = this.prismaService.lasanha.create({ data });
+    return lasanhaCriado;
   }
 
   findAll() {
-    return `This action returns all lasanha`;
+    const todasLasanha = this.prismaService.lasanha.findMany();
+    return todasLasanha;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} lasanha`;
+    const lasanha = this.prismaService.lasanha.findUnique({
+      where: { id },
+    });
+    return lasanha;
   }
 
   update(id: number, updateLasanhaDto: UpdateLasanhaDto) {
-    return `This action updates a #${id} lasanha`;
+    const lasanhaAtualizado = this.prismaService.lasanha.update({
+      where: { id },
+      data: updateLasanhaDto,
+    });
+    return lasanhaAtualizado;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} lasanha`;
+    this.prismaService.lasanha.delete({ where: { id } });
+    return `This action removes lasanha #${id}`;
   }
 }

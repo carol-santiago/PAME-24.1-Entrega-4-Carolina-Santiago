@@ -1,1 +1,4 @@
-export class CreateLasanhaDto {}
+export class CreateLasanhaDto {
+  id: number;
+  data_validade: Date;
+}

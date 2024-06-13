@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AssocPedidoLasanhaService } from './assoc-pedido-lasanha.service';
 import { CreateAssocPedidoLasanhaDto } from './dto/create-assoc-pedido-lasanha.dto';
 import { UpdateAssocPedidoLasanhaDto } from './dto/update-assoc-pedido-lasanha.dto';
 
 @Controller('assoc-pedido-lasanha')
 export class AssocPedidoLasanhaController {
-  constructor(private readonly assocPedidoLasanhaService: AssocPedidoLasanhaService) {}
+  constructor(
+    private readonly assocPedidoLasanhaService: AssocPedidoLasanhaService,
+  ) {}
 
   @Post()
   create(@Body() createAssocPedidoLasanhaDto: CreateAssocPedidoLasanhaDto) {
@@ -23,8 +33,14 @@ export class AssocPedidoLasanhaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAssocPedidoLasanhaDto: UpdateAssocPedidoLasanhaDto) {
-    return this.assocPedidoLasanhaService.update(+id, updateAssocPedidoLasanhaDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateAssocPedidoLasanhaDto: UpdateAssocPedidoLasanhaDto,
+  ) {
+    return this.assocPedidoLasanhaService.update(
+      +id,
+      updateAssocPedidoLasanhaDto,
+    );
   }
 
   @Delete(':id')

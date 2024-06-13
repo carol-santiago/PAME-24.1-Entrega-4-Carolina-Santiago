@@ -1,1 +1,5 @@
-export class CreateClienteDto {}
+export class CreateClienteDto {
+  nome: string;
+  telefone: string;
+  id_endereco: number;
+}

@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
 import { UpdatePedidoDto } from './dto/update-pedido.dto';
-
+import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class PedidoService {
-  create(createPedidoDto: CreatePedidoDto) {
-    return 'This action adds a new pedido';
+  constructor(private readonly prismaService: PrismaService) {}
+  create(data: CreatePedidoDto) {
+    const pedidoCriado = this.prismaService.pedido.create({ data });
+    return pedidoCriado;
   }
 
   findAll() {
-    return `This action returns all pedido`;
+    const todosPedido = this.prismaService.pedido.findMany();
+    return todosPedido;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} pedido`;
+    const pedido = this.prismaService.pedido.findUnique({
+      where: { id },
+    });
+    return pedido;
   }
 
   update(id: number, updatePedidoDto: UpdatePedidoDto) {
-    return `This action updates a #${id} pedido`;
+    const pedidoAtualizado = this.prismaService.pedido.update({
+      where: { id },
+      data: updatePedidoDto,
+    });
+    return pedidoAtualizado;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} pedido`;
+    this.prismaService.pedido.delete({ where: { id } });
+    return `This action removes pedido #${id}`;
   }
 }

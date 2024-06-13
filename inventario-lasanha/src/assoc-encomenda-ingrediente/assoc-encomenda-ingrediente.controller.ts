@@ -1,15 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AssocEncomendaIngredienteService } from './assoc-encomenda-ingrediente.service';
 import { CreateAssocEncomendaIngredienteDto } from './dto/create-assoc-encomenda-ingrediente.dto';
 import { UpdateAssocEncomendaIngredienteDto } from './dto/update-assoc-encomenda-ingrediente.dto';
 
 @Controller('assoc-encomenda-ingrediente')
 export class AssocEncomendaIngredienteController {
-  constructor(private readonly assocEncomendaIngredienteService: AssocEncomendaIngredienteService) {}
+  constructor(
+    private readonly assocEncomendaIngredienteService: AssocEncomendaIngredienteService,
+  ) {}
 
   @Post()
-  create(@Body() createAssocEncomendaIngredienteDto: CreateAssocEncomendaIngredienteDto) {
-    return this.assocEncomendaIngredienteService.create(createAssocEncomendaIngredienteDto);
+  create(
+    @Body()
+    createAssocEncomendaIngredienteDto: CreateAssocEncomendaIngredienteDto,
+  ) {
+    return this.assocEncomendaIngredienteService.create(
+      createAssocEncomendaIngredienteDto,
+    );
   }
 
   @Get()
@@ -23,8 +38,15 @@ export class AssocEncomendaIngredienteController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAssocEncomendaIngredienteDto: UpdateAssocEncomendaIngredienteDto) {
-    return this.assocEncomendaIngredienteService.update(+id, updateAssocEncomendaIngredienteDto);
+  update(
+    @Param('id') id: string,
+    @Body()
+    updateAssocEncomendaIngredienteDto: UpdateAssocEncomendaIngredienteDto,
+  ) {
+    return this.assocEncomendaIngredienteService.update(
+      +id,
+      updateAssocEncomendaIngredienteDto,
+    );
   }
 
   @Delete(':id')

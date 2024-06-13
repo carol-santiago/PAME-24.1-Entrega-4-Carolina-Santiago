@@ -1,26 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAssocLasanhaIngredienteDto } from './dto/create-assoc-lasanha-ingrediente.dto';
 import { UpdateAssocLasanhaIngredienteDto } from './dto/update-assoc-lasanha-ingrediente.dto';
-
+import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class AssocLasanhaIngredienteService {
-  create(createAssocLasanhaIngredienteDto: CreateAssocLasanhaIngredienteDto) {
-    return 'This action adds a new assocLasanhaIngrediente';
+  constructor(private readonly prismaService: PrismaService) {}
+  create(data: CreateAssocLasanhaIngredienteDto) {
+    const assocLasanhaIngredienteCriado =
+      this.prismaService.assocLasanhaIngrediente.create({ data });
+    return assocLasanhaIngredienteCriado;
   }
 
   findAll() {
-    return `This action returns all assocLasanhaIngrediente`;
+    const todasAssocLasanhaIngrediente =
+      this.prismaService.assocLasanhaIngrediente.findMany();
+    return todasAssocLasanhaIngrediente;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} assocLasanhaIngrediente`;
+    const assocLasanhaIngrediente =
+      this.prismaService.assocLasanhaIngrediente.findUnique({
+        where: { id },
+      });
+    return assocLasanhaIngrediente;
   }
 
-  update(id: number, updateAssocLasanhaIngredienteDto: UpdateAssocLasanhaIngredienteDto) {
-    return `This action updates a #${id} assocLasanhaIngrediente`;
+  update(
+    id: number,
+    updateAssocLasanhaIngredienteDto: UpdateAssocLasanhaIngredienteDto,
+  ) {
+    const assocLasanhaIngredienteAtualizado =
+      this.prismaService.assocLasanhaIngrediente.update({
+        where: { id },
+        data: updateAssocLasanhaIngredienteDto,
+      });
+    return assocLasanhaIngredienteAtualizado;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} assocLasanhaIngrediente`;
+    this.prismaService.assocLasanhaIngrediente.delete({ where: { id } });
+    return `This action removes assocLasanhaIngrediente #${id} `;
   }
 }

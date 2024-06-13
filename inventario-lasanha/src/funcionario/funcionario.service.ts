@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFuncionarioDto } from './dto/create-funcionario.dto';
 import { UpdateFuncionarioDto } from './dto/update-funcionario.dto';
-
+import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class FuncionarioService {
-  create(createFuncionarioDto: CreateFuncionarioDto) {
-    return 'This action adds a new funcionario';
+  constructor(private readonly prismaService: PrismaService) {}
+  create(data: CreateFuncionarioDto) {
+    const funcionarioCriado = this.prismaService.funcionario.create({ data });
+    return funcionarioCriado;
   }
 
   findAll() {
-    return `This action returns all funcionario`;
+    const todosFuncionario = this.prismaService.funcionario.findMany();
+    return todosFuncionario;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} funcionario`;
+    const funcionario = this.prismaService.funcionario.findUnique({
+      where: { id },
+    });
+    return funcionario;
   }
 
   update(id: number, updateFuncionarioDto: UpdateFuncionarioDto) {
-    return `This action updates a #${id} funcionario`;
+    const funcionarioAtualizado = this.prismaService.funcionario.update({
+      where: { id },
+      data: updateFuncionarioDto,
+    });
+    return funcionarioAtualizado;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} funcionario`;
+    this.prismaService.funcionario.delete({ where: { id } });
+    return `This action removes funcionario #${id}`;
   }
 }
