@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Funcionario {
+  id Int @id @default(autoincrement())
+  nome String
+  email String
+  senha String
+}
+
+model Cliente {
+  id Int @id @default(autoincrement())
+  nome String
+  telefone String
+  id_endereco Int? @unique
+  endereco Endereco? @relation(fields: [id_endereco], references: [id])
+  pedidos Pedido[]
+}
+
+model Endereco {
+  id Int @id @default(autoincrement())
+  cep String
+  rua String
+  numero String
+  complemento String
+  cliente Cliente? 
+}
+
+model Pedido {
+  id Int @id @default(autoincrement())
+  id_cliente Int
+  data_pedido DateTime
+  status_pedido String
+  cliente Cliente @relation(fields: [id_cliente], references: [id])
+  pedido_lasanhas AssocPedidoLasanha[]
+}
+
+model Lasanha {
+  id Int @id @default(autoincrement())
+  data_validade DateTime
+  pedido_lasanha AssocPedidoLasanha[]
+  lasanha_ingrediente AssocLasanhaIngrediente[]
+}
+
+model AssocPedidoLasanha {
+  id Int @id @default(autoincrement())
+  id_pedido Int
+  id_lasanha Int
+  pedido Pedido @relation(fields: [id_pedido], references: [id])
+  lasanha Lasanha @relation(fields: [id_lasanha], references: [id])
+}
+
+model Ingrediente {
+  id Int @id @default(autoincrement())
+  nome String
+  qntd_receita Int
+  qntd_estoque Int
+  unidade String
+  lasanha_ingrediente AssocLasanhaIngrediente[]
+  encomenda_ingrediente AssocEncomendaIngrediente[]
+}
+
+model AssocLasanhaIngrediente {
+  id Int @id @default(autoincrement())
+  id_lasanha Int
+  id_ingrediente Int
+  lasanha Lasanha @relation(fields: [id_lasanha], references: [id])
+  ingrediente Ingrediente @relation(fields: [id_ingrediente], references: [id])
+}
+
+model Encomenda {
+  id Int @id @default(autoincrement())
+  data_encomenda DateTime
+  status_encomenda String
+  encomenda_ingrediente AssocEncomendaIngrediente[]
+}
+
+model AssocEncomendaIngrediente {
+  id Int @id @default(autoincrement())
+  id_encomenda Int
+  id_ingrediente Int
+  qntd_encomendada Int
+  encomenda Encomenda @relation(fields: [id_encomenda], references: [id])
+  ingrediente Ingrediente @relation(fields: [id_ingrediente], references: [id])
+}
+
