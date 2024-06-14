@@ -1,0 +1,76 @@
+<b>[[ Dicionário de Requisições Fora do Comum ]]</b>
+
+GET /encomenda/[id]/status  
+>>>  retorna status da encomenda com id especificado
+
+GET /assoc-encomenda-ingrediente/checklist/id_encomenda  
+>>>  retorna checklist da encomenda com id=id_encomenda, com todas as suas associações
+
+<b>[[ Guia para arquivos JSON ]]</b>
+
+CLIENTE:
+{
+  "nome": "",
+  "telefone": "",
+  "id_endereco": Int
+}
+
+FUNCIONARIO:
+{
+  "nome": "",
+  "email": "",
+  "senha": "",
+}
+
+ENDERECO:
+{
+  "cep": "",
+  "rua": "",
+  "numero": "",
+  "complemento": ""
+}
+
+PEDIDO:
+{
+  "id_cliente": Int,
+  "data_pedido": DateTime (ex: 2024-01-01T00:00:00.000Z),
+  "status_pedido": ""
+}
+
+LASANHA:
+{
+  "data_validade": DateTime (ex: 2024-01-01T00:00:00.000Z)
+}
+
+INGREDIENTE:
+{
+  "nome": "",
+  "qntd_receita": "",
+  "qntd_estoque": "",
+  "unidade": ""
+}
+
+ENCOMENDA:
+{
+  "data_encomenda": DateTime (ex: 2024-01-01T00:00:00.000Z),
+  "status_encomenda": ""
+}
+
+ASSOC_ENCOMENDA_INGREDIENTE:
+{
+  "id_encomenda": Int,
+  "id_ingrediente": Int,
+  "qntd_encomendada": ""
+}
+
+ASSOC_PEDIDO_LASANHA:
+{
+  "id_pedido": Int,
+  "id_lasanha": Int
+}
+
+ASSOC_LASANHA_INGREDIENTE:
+{
+  "id_lasanha": Int,
+  "id_ingrediente": Int,
+}

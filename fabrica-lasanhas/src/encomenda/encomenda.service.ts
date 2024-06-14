@@ -36,4 +36,13 @@ export class EncomendaService {
     await this.prismaService.encomenda.delete({ where: { id } });
     return `This action removes encomenda #${id}`;
   }
+
+  async getStatusByEncomendaId(id: number) {
+    // Função para retornar o status de uma encomenda com um id específico
+    const encomenda = await this.prismaService.encomenda.findUnique({
+      where: { id },
+      select: { status_encomenda: true },
+    });
+    return encomenda.status_encomenda;
+  }
 }

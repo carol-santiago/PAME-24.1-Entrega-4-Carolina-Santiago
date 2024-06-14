@@ -18,8 +18,9 @@ export class AssocEncomendaIngredienteController {
   ) {}
 
   @Post()
+  // Método POST para criar uma nova associação
   create(
-    @Body()
+    @Body() // Requer um JSON com os atributos necessários para criar a associação
     createAssocEncomendaIngredienteDto: CreateAssocEncomendaIngredienteDto,
   ) {
     return this.assocEncomendaIngredienteService.create(
@@ -27,20 +28,21 @@ export class AssocEncomendaIngredienteController {
     );
   }
 
-  @Get()
+  @Get() // Método GET - lista todas as associações na rota /assoc-encomenda-ingrediente
   findAll() {
     return this.assocEncomendaIngredienteService.findAll();
   }
 
-  @Get(':id')
+  @Get(':id') // Método GET - lista a associação com o id especificado na rota /assoc-encomenda-ingrediente/[id]
   findOne(@Param('id') id: string) {
     return this.assocEncomendaIngredienteService.findOne(+id);
   }
 
   @Patch(':id')
+  // Método PATCH - atualiza a associação com o id especificado na rota /assoc-encomenda-ingrediente/[id]
   update(
     @Param('id') id: string,
-    @Body()
+    @Body() // Requer um JSON com os campos a serem atualizados
     updateAssocEncomendaIngredienteDto: UpdateAssocEncomendaIngredienteDto,
   ) {
     return this.assocEncomendaIngredienteService.update(
@@ -50,7 +52,20 @@ export class AssocEncomendaIngredienteController {
   }
 
   @Delete(':id')
+  // Método DELETE - remove a associação sendo acessada na rota /assoc-encomenda-ingrediente/[id da associação]
   remove(@Param('id') id: string) {
     return this.assocEncomendaIngredienteService.remove(+id);
   }
+
+  @Get('checklist/:id_encomenda')
+  // Método GET - lista o checklist da encomenda com o id especificado na rota /assoc-encomenda-ingrediente/checklist/[id da encomenda]
+  getChecklist(@Param('id_encomenda') id_encomenda: string) {
+    return this.assocEncomendaIngredienteService.getChecklistByEncomenda(
+      Number(id_encomenda),
+    );
+  }
+
+  @Get(':checklist')
+  // Handler de erro de rota para encontrar um checklist
+  checklistError() {}
 }
