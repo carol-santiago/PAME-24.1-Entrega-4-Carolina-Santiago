@@ -45,8 +45,8 @@ LASANHA:
 INGREDIENTE:
 {
   "nome": "",
-  "qntd_receita": "",
-  "qntd_estoque": "",
+  "qntd_receita": Int,
+  "qntd_estoque": Int,
   "unidade": ""
 }
 
@@ -60,7 +60,7 @@ ASSOC_ENCOMENDA_INGREDIENTE:
 {
   "id_encomenda": Int,
   "id_ingrediente": Int,
-  "qntd_encomendada": ""
+  "qntd_encomendada": Int
 }
 
 ASSOC_PEDIDO_LASANHA:
